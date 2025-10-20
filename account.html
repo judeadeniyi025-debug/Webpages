@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="account.css">
+    <title>Create account</title>
+</head>
+<body>
+
+    <aside class="card" aria-label="Login panel">
+                <div class="form-title">
+                    <h2><i class="fa-solid fa-user"></i> Create account</h2>
+                    
+                </div>
+
+                <form id="loginForm" novalidate>
+                    <div class="input-group">
+                        <label for="identifier">Email address or username</label>
+                        <input id="identifier" type="text" name="identifier" placeholder="you@company.com or yourname" required autocomplete="username"/>
+                        <div id="idError" class="error" style="display:none">Please enter your email or username.</div>
+
+                        <div class="input-group">
+                            <label for="password">New Password</label>
+                            <div style="position:relative;display:flex;align-items:center;">
+                                <input id="password" type="password" name="password" placeholder="Enter your new password" required autocomplete="current-password"/>
+                                <button type="button" id="pwToggle" aria-label="Show password" style="position:absolute;right:8px;height:34px;padding:6px 8px;border-radius:8px;border:none;background: transparent;color: var(--muted);cursor: pointer">Hide</button>
+                            </div>
+                            <div id="pwError" class="seconderror" style="display:none">Please enter your password.</div>
+
+                         <div class="input-group">
+                            <label for="password">Confirm Password</label>
+                            <div style="position:relative;
+                            display:flex;
+                            align-items:center;"
+                            >
+                                <input id="password" type="password" name="password" placeholder="Confirm your new password" required autocomplete="current-password"/>
+                                <button type="button" id="pwToggle" aria-label="Show password" style="position:absolute;right:8px;height:34px;padding:6px 8px;border-radius:8px;border:none;background: transparent;color: var(--muted);cursor: pointer">Hide</button>
+                            </div>
+                            <div id="pwError" class="seconderror" style="display:none">Please enter your password.</div>
+                            <div>
+                                <button class="btn btn-primary" type="submit">Create account</button>
+                            </div>
+                            <div class="divider"></div>
+
+                            <!-- <div class="foot">By signing in you agree to our <a class="link" href="#">Terms</a> and <a class="link" href="#">Privacy Policy</a></div> -->
+                            <div><p class="link">Already have an account?<br>
+                            <a href="./backend.html">Sign in</a> here</a></p></div>
+                        </form>
+                        </aside>
+                        </main>
+
+                        <script>
+                            (function(){
+                                const pw = document.getElementById('password');
+                                const toggle = document.getElementById('pwToggle');
+                                const form = document.getElementById('loginForm');
+                                const idError = document.getElementById('idError');
+                                const pwError = document.getElementById('pwError');
+                                const idField = document.getElementById('identifier');
+
+                                toggle.addEventListener('click', function(){
+                                    if(pw.type === "password"){
+                                        pw.type = "text";
+                                        toggle.textContent = "Hide";
+                                        toggle.setAttribute('aria-label', 'Hide password');
+                                    } else {
+                                        pw.type = "password";
+                                        toggle.textContent = "Show";
+                                        toggle.setAttribute('aria-label', 'Show password');
+                                    }
+                                });
+
+                                form.addEventListener('submit', function(e){
+                                    e.preventDefault();
+                                    let valid = true;
+                                    idError.style.display = "none"; pwError.style.display = "none";
+                                    if(!idField.value.trim()){
+                                        idError.style.display = "block";
+                                        valid = false;
+                                    }
+                                    if(!valid){
+                                        return
+                                    }
+
+                                    const payload = {
+                                        identifier: idField.value.trim(),
+                                        password: pw.value,
+                                        remember: document.getElementById('remember').checked
+                                    };
+                                    console.log("login payload", payload);
+                                    const btn = form.querySelector('.btn-primary');
+                                    btn.textContent = "Signing in...";
+                                    btn.disabled = true;
+
+                                    setTimeout(() => {
+                                        alert("Demo only: form not actually submitted");
+                                        btn.textContent = "Sign in";
+                                        btn.disabled = false;
+                                        form.reset();
+                                    }, 800);
+                                });
+                            })();
+                            </script>
+</body>
+</html>
